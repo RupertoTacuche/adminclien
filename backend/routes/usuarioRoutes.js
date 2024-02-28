@@ -1,20 +1,8 @@
 import express from "express";
 const router = express.Router();
+import { registrar } from '../controllers/usuarioController.js'
 
-router.get("/", (req, res)  => {
-    res.json("Desde API/USUARIOS");
-})
-
-router.post("/confirmar", (req, res)  => {
-    res.json({msg: "Confirmando  usuario"});
-})
-
-router.put("/", (req, res) => {
-    res.json("DESDE - PUT - API/USUARIOS")
-})
-
-router.delete("/", (req, res) => {
-    res.json("DESDE - DELETE - API/USUARIOS")
-})
+//Autenticacion, Registro y Confirmacion de Usuarios
+router.post('/',registrar);
 
 export default router;
