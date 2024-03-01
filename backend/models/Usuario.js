@@ -1,6 +1,8 @@
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 
+//const bcrypt = require('bcrypt');
+
 const usuarioSchema = mongoose.Schema({
     nombre: {
         type: String, 
@@ -30,10 +32,23 @@ const usuarioSchema = mongoose.Schema({
     timestamps: true, 
 });
 
-usuarioSchema.pre('save', async function(next){
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password ,salt)
-})
+//usuarioSchema.pre('save', async function(next){
+//    const salt = await bcrypt.genSalt(10);
+//    this.password = await bcrypt.hash(this.password ,salt)
+//   console.log(this.password)
+//})
+
+
+// hashear los password con el hook de pre de mongoose
+usuarioSchema.pre("save", async function (next) {
+    // si esta modificado el password que pase a la siguiente Middleware
+    if (!this.isModified("password")) {
+        next();
+    }
+    const sal = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, sal);
+  });
+
 
 const Usuario = mongoose.model("Usuario", usuarioSchema)
 export default Usuario; 
