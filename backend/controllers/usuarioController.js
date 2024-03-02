@@ -1,5 +1,6 @@
 import Usuario from  '../models/Usuario.js';
 import generarId from '../helpers/generarId.js';
+import generarJWT from '../helpers/generarJWT.js';
 
 // crear un nuevo usuario y almacenarlo en la base de datos
 const registrar = async (req, res) => {
@@ -43,6 +44,7 @@ if (await usuario.comprobarPassword(password)){
         _id:usuario.id,
         nombre: usuario.nombre,
         email: usuario.email,
+        token: generarJWT(usuario._id),
     })
 } else {
     const error = new Error("El password es incorrecto")
