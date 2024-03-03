@@ -4,13 +4,14 @@ import {
     registrar, 
     autenticar,
     confirmar,
+    olvidePassword,
   } from '../controllers/usuarioController.js'
 
 //Autenticacion, Registro y Confirmacion de Usuarios
 router.post('/',registrar);
 router.post("/login", autenticar);
 router.get('/confirmar/:token', confirmar)
-
+router.post('/olvide-password', olvidePassword)
 
 
 export default router;
