@@ -87,8 +87,20 @@ try {
     res.json({msg: "Hemos enviado un email con las instrucciones"})
 } catch (error){
     console.log(error)
+}}
+
+const comprobarToken = async (req, res) => {
+    const{ token }= req.params;
+    const tokenValido = await Usuario.findOne({token});
+
+    if(tokenValido){
+        res.json({msg: 'Token valido y el Usuario existe'})
+    } else {
+        const error = new Error("Token no valido")
+        return res.status(404).json({msg: error.message})
+    }
 }
 
-}
 
-export { registrar, autenticar, confirmar, olvidePassword }
+
+export { registrar, autenticar, confirmar, olvidePassword, comprobarToken }
